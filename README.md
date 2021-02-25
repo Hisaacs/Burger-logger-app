@@ -24,7 +24,6 @@
 This is a restaurant application where users can input the names of their favorite burgers they'd like to devour.
 
 Github Page: https://github.com/Hisaacs/Burger-logger-app </br>
-Live Demo:
 
 # Objective
 
