@@ -1,100 +1,64 @@
 // Make sure we wait to attach our handlers until the DOM is fully loaded.
-document.addEventListener('DOMContentLoaded', (event) => {
-  event.preventDefault();
-  if (event) {
-    console.info('DOM loaded');
-  }
+$(function() {
+  // Change devour state on click of .change-devour
+  $('.change-devour').on('click', function(event) {
+    event.preventDefault();
+    const id = $(this).data('id');
+    const newDevour = $(this).data('newdevour');
 
-  // UPDATE
-  const changeDevourBtns = document.querySelectorAll('.change-devour');
+    const newDevouredState = {
+      devoured: newDevour,
+    };
 
-  // Set up the event listener for the create button
-  if (changeDevourBtns) {
-    changeDevourBtns.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        // Grabs the id of the element that goes by the name, "id"
-        const id = e.target.getAttribute('data-id');
-        const newDevour = e.target.getAttribute('data-newdevour');
-
-        const newDevourState = {
-          devour: newDevour,
-        };
-
-        fetch(`/api/cats/${id}`, {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-
-          // make sure to serialize the JSON body
-          body: JSON.stringify(newDevourState),
-        }).then((response) => {
-          // Check that the response is all good
-          // Reload the page so the user can see the new quote
-          if (response.ok) {
-            console.log(`changed devour to: ${newDevour}`);
-            location.reload('/');
-          } else {
-            alert('something went wrong!');
-          }
-        });
-      });
+    // Send the PUT request.
+    $.ajax(`/api/burgers/${id}`, {
+      type: 'PUT',
+      data: newDevouredState,
+    }).then(function() {
+      console.log('changed devoured to', newDevour);
+      // Reload the page to get the updated list
+      location.reload();
     });
-  }
+  });
 
-  // CREATE
-  const createBurgerBtn = document.getElementById('create-form');
+  $('.create-form').on('submit', function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
 
-  if (createBurgerBtn) {
-    createBurgerBtn.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // Grabs the value of the textarea that goes by the name, "quote"
+    const burgerValue = $('#br')
+      .val()
+      .trim();
+    if (burgerValue) {
       const newBurger = {
-        name: document.getElementById('burger').value.trim(),
-        
+        name: $('#br')
+          .val()
+          .trim(),
+        devoured: 0,
       };
 
-      // Send POST request to create a new quote
-      fetch('/api/burgers', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-
-        // make sure to serialize the JSON body
-        body: JSON.stringify(newBurger),
-      }).then(() => {
-        // Empty the form
-        document.getElementById('burger').value = '';
-
-        // Reload the page so the user can see the new quote
-        console.log('Created a new burger!');
+      // Send the POST request.
+      $.ajax('/api/burgers', {
+        type: 'POST',
+        data: newBurger,
+      }).then(function() {
+        console.log('created new burger');
+        // Reload the page to get the updated list
         location.reload();
       });
-    });
-  }
+    }
+  });
 
-  // DELETE
-  const deleteBurgerBtns = document.querySelectorAll('.delete-cat');
+  // Delete selected burger
+  $('.delete-burger').on('click', function(event) {
+    const id = $(this).data('id');
 
-  // Set up the event listeners for each delete button
-  deleteBurgerBtns.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const id = e.target.getAttribute('data-id');
-
-      // Send the delete request
-      fetch(`/api/burgers/${id}`, {
-        method: 'DELETE',
-      }).then((res) => {
-        console.log(res);
-        console.log(`Deleted burger: ${id}`);
-
-        // Reload the page
-        location.reload();
-      });
+    // Send the DELETE request.
+    $.ajax(`/api/burgers/${id}`, {
+      type: 'DELETE',
+    }).then(function() {
+      console.log('deleted burger', id);
+      // Reload the page to get the updated list
+      location.reload();
     });
   });
 });

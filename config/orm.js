@@ -1,8 +1,12 @@
 // Import MySQL connection.
-const connection = require('./connection.js');
+const connection = require('../config/connection.js');
 
-// Helper function for SQL syntax to add question marks (?, ?, ?) in query
-const printQuestionMarks = (num) => {
+// Helper function for SQL syntax.
+// Let's say we want to pass 3 values into the mySQL query.
+// In order to write the query, we need 3 question marks.
+// The above helper function loops through and creates an array of question marks - ["?", "?", "?"] - and turns it into a string.
+// ["?", "?", "?"].toString() => "?,?,?";
+function printQuestionMarks(num) {
   const arr = [];
 
   for (let i = 0; i < num; i++) {
@@ -10,42 +14,44 @@ const printQuestionMarks = (num) => {
   }
 
   return arr.toString();
-};
+}
 
 // Helper function to convert object key/value pairs to SQL syntax
-const objToSql = (ob) => {
+function objToSql(ob) {
   const arr = [];
 
-  // Loop through the keys and push the key/value as a string int arr
+  // loop through the keys and push the key/value as a string int arr
   for (const key in ob) {
     let value = ob[key];
-    // Check to skip hidden properties
+    // check to skip hidden properties
     if (Object.hasOwnProperty.call(ob, key)) {
-      // If string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
+      // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
       if (typeof value === 'string' && value.indexOf(' ') >= 0) {
         value = `'${value}'`;
       }
       // e.g. {name: 'Lana Del Grey'} => ["name='Lana Del Grey'"]
-      // e.g. {devoured: true} => ["devoured=true"]
+      // e.g. {sleepy: true} => ["sleepy=true"]
       arr.push(`${key}=${value}`);
     }
   }
 
-  // Translate array of strings to a single comma-separated string
+  // translate array of strings to a single comma-separated string
   return arr.toString();
-};
+}
 
 // Object for all our SQL statement functions.
 const orm = {
   all(tableInput, cb) {
     const queryString = `SELECT * FROM ${tableInput};`;
-    connection.query(queryString, (err, result) => {
+    connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
       }
       cb(result);
     });
   },
+
+  // Insert new burger into database
   create(table, cols, vals, cb) {
     let queryString = `INSERT INTO ${table}`;
 
@@ -58,7 +64,7 @@ const orm = {
 
     console.log(queryString);
 
-    connection.query(queryString, vals, (err, result) => {
+    connection.query(queryString, vals, function(err, result) {
       if (err) {
         throw err;
       }
@@ -66,7 +72,7 @@ const orm = {
       cb(result);
     });
   },
-  // An example of objColVals would be {name: panther, devoured: true}
+  // Update to a current burger
   update(table, objColVals, condition, cb) {
     let queryString = `UPDATE ${table}`;
 
@@ -76,7 +82,7 @@ const orm = {
     queryString += condition;
 
     console.log(queryString);
-    connection.query(queryString, (err, result) => {
+    connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
       }
@@ -89,7 +95,7 @@ const orm = {
     queryString += ' WHERE ';
     queryString += condition;
 
-    connection.query(queryString, (err, result) => {
+    connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
       }
