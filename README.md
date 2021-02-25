@@ -1,7 +1,7 @@
 
 # Preview 
 
-![Burger-logger](https://user-images.githubusercontent.com/19741669/109140487-99db8680-7797-11eb-9485-2dbec21d107f.gif)
+![Burger-logger](https://user-images.githubusercontent.com/19741669/109141355-9bf21500-7798-11eb-9e5d-946e646b89d5.gif)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/hisaacs/README-Generator)
 
