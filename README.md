@@ -1,5 +1,7 @@
 
-![burgerexplosion](https://user-images.githubusercontent.com/19741669/109128380-66462f80-778a-11eb-9abd-c54f7b28268e.gif)
+# Preview 
+
+![Burger-logger](https://user-images.githubusercontent.com/19741669/109140487-99db8680-7797-11eb-9485-2dbec21d107f.gif)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/hisaacs/README-Generator)
 
