@@ -5,7 +5,7 @@
 
 - [Objective](#objective)
 
-- [TechnologiesUsed](#technologies used)
+- [TechnologiesUsed](#technologiesused)
 
 - [Usage](#usage)
 
