@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  margin: 10px;
 }
 
 .eatBurger {
@@ -8,11 +9,11 @@
   color: #222f66;
 }
 .burgerImage {
-  margin: 0 auto;
+  margin: 10 auto;
   text-align: center;
 }
-.burgerImage .animated-gif {
-  height: 5px;
+.animated-gif {
+  height: 250px;
 }
 
 .lead {
@@ -100,7 +101,7 @@ button {
   border-radius: 6px;
   color: #fff;
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 0.9em;
   text-transform: uppercase;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
@@ -115,6 +116,7 @@ button:active {
   outline: none !important;
   -webkit-box-shadow: none;
   box-shadow: none;
+  
 }
 
 body {
